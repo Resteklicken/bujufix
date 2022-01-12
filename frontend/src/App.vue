@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/pug.jpg">
-    <HelloWorld msg="Welcome to Your BuJu App"/>
+    <ShowPug msg="Welcome to Your BuJu App"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ShowPug from './components/ShowPug.vue'
+
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    ShowPug
   }
 }
 </script>

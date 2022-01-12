@@ -16,4 +16,11 @@ app.get('/status', (req, res) => {
     })
 })
 
+app.post('/showPug', (req, res) => {
+    /*res.send({
+        message: `Your message was ${req.body.message}`
+    })*/
+    //console.log("req received")
+    res.sendFile('/backend/src/assets/pug.jpg')
+})
 app.listen(process.env.PORT || 8080)
