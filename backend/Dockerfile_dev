@@ -1,0 +1,18 @@
+# base image
+FROM node:14
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+COPY package*.json ./
+
+ENV NODE_ENV=development
+
+RUN npm install
+
+#RUN node ./node_modules/eslint/bin/eslint.js --init
+
+EXPOSE 8080
+
+CMD [ "npm", "run", "start"]

@@ -1,0 +1,10 @@
+services:
+  buju-backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile_production
+    working_dir: /home/node/app
+    volumes:
+     - ./:/home/node/app
+    ports:
+      - 8080:80
