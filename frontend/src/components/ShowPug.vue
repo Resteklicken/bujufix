@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <img v-if="!isHidden" id="cutepug" src="../assets/pug.jpg" style="position: center"/>
+    <img v-if="!isHidden" id="cutepug" v-bind:src="getImage('pug.jpg')" style="position: center"/>
     <br>
     <button @click="showPug">Do you want to see a pug?</button>
   </div>
@@ -15,9 +15,13 @@ export default {
     msg: String
   },
   data: () => ({
+    imageSource: "../assets/pug.jpg",
     isHidden: true
   }),
   methods: {
+    getImage(path) {
+      return require('../assets/'+path)
+    },
     showPug() {
       this.isHidden = !this.isHidden
       console.log("Show me the cuties!")
