@@ -2,7 +2,7 @@
   "name": "bujufix-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/app.js --exec  \"npm run lint && node\"",
@@ -13,7 +13,10 @@
   "author": "René Gentzen",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.19.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",
@@ -22,7 +25,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es6": true
     },
     "extends": [
       "eslint:recommended"

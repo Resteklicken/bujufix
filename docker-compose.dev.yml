@@ -1,0 +1,20 @@
+services:
+  bujufix-backend:
+    build:
+      dockerfile: Dockerfile_dev
+    working_dir: /backend
+    volumes:
+      - ./backend/:/backend
+      - /backend/node_modules
+    ports:
+      - 8080:8080
+
+  bujufix-frontend:
+    build:
+      dockerfile: Dockerfile_dev
+    working_dir: /frontend
+    volumes:
+      - ./frontend/:/frontend
+      - /frontend/node_modules
+    ports:
+      - 8081:8080

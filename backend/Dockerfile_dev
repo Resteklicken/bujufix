@@ -2,16 +2,16 @@
 FROM node:14
 
 # Create app directory
-WORKDIR /app
+WORKDIR /backend
 
 # Install app dependencies
 COPY package*.json ./
 
-ENV NODE_ENV=development
-
 RUN npm install
 
-#RUN node ./node_modules/eslint/bin/eslint.js --init
+#RUN npm link morgan
+
+#RUN npm link cors
 
 EXPOSE 8080
 

@@ -10,14 +10,15 @@
   "author": "René Gentzen",
   "dependencies": {
     "core-js": "^3.6.4",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "axios": "^0.24.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.4",
     "@vue/cli-plugin-eslint": "~4.5.4",
     "@vue/cli-service": "~4.5.4",
     "babel-eslint": "^10.0.1",
-    "eslint": "^8.6.0",
+    "eslint": "^7.14.0",
     "eslint-plugin-vue": "^6.2.1",
     "vue-template-compiler": "^2.6.12"
   },

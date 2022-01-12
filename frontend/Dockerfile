@@ -1,5 +1,5 @@
 FROM node:14 as build-stage
-WORKDIR /app
+WORKDIR /frontend
 COPY package*.json ./
 RUN npm install
 COPY .. .
