@@ -1,7 +1,10 @@
 services:
   bujufix-backend:
+    depends_on:
+      - bujufix-db
     build:
       context: ./backend
+    restart: unless-stopped
     volumes:
      - ./backend/:/backend
      - /backend/node_modules
@@ -9,6 +12,40 @@ services:
   bujufix-frontend:
     build:
       context: ./frontend
+    depends_on:
+      - bujufix-backend
+    restart: unless-stopped
     volumes:
       - ./frontend/:/frontend
       - /frontend/node_modules
+
+  bujufix-db:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bujufixdb
+      MYSQL_USER: buju
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+    volumes:
+      - db:/var/run/mysqld
+    network_mode: "none"
+    secrets:
+      - mysql_password
+      - mysql_root_password
+
+  adminer:
+    image: adminer
+    depends_on:
+      - bujufix-db
+    volumes:
+      - db:/var/run/mysqld
+
+volumes:
+    db:
+
+secrets:
+    mysql_root_password:
+      file: ./db/secrets/mysql_root_password
+    mysql_password:
+      file: ./db/secrets/mysql_password
