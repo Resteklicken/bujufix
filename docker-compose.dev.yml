@@ -6,8 +6,6 @@ services:
     volumes:
       - ./backend/:/backend
       - /backend/node_modules
-    ports:
-      - 8080:8080
 
   bujufix-frontend:
     build:
@@ -16,5 +14,3 @@ services:
     volumes:
       - ./frontend/:/frontend
       - /frontend/node_modules
-    ports:
-      - 8081:8080
