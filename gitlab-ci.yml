@@ -12,5 +12,5 @@ push:
     - echo "{\"auths\":{\"$REGISTRY_URL\":{\"auth\":\"$REGISTRY_TOKEN\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context "$CI_PROJECT_DIR"
-      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --dockerfile "$CI_PROJECT_DIR/frontend/Dockerfile_dev"
       --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
