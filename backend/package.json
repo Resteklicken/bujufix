@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.2",
+    "typeorm": "^0.2.41",
     "morgan": "^1.10.0",
     "cors": "^2.8.5",
     "body-parser": "^1.19.1"
