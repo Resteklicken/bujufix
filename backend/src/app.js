@@ -17,7 +17,7 @@ app.get('/status', (req, res) => {
     })
 })
 
-app.post('/showPug', (req, res) => {
+app.get('/showPug', (req, res) => {
     /*res.send({
         message: `Your message was ${req.body.message}`
     })*/
