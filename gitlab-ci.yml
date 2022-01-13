@@ -2,7 +2,7 @@ push:
   stage: push
   only:
     - staging
-    - master
+    - main
   tags:
     - kaniko
   image:
