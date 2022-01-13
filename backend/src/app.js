@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/status', (req, res) => {
+    console.log("Hi there!")
     res.send({
         message: 'Hello, world!'
     })
