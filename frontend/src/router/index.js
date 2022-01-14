@@ -1,23 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ShowPug from "../src/components/ShowPug";
-import Home from "../src/components/Home";
-import ResultOverview from "../src/components/ResultOverview";
-import StudentOverview from "../src/components/StudentOverview";
-import StationOverview from "../src/components/StationOverview";
-import EditEntry from "../src/components/EditEntry";
+import Home from "../components/Home";
+import ResultOverview from "../components/ResultOverview";
+import StudentOverview from "../components/StudentOverview";
+import StationOverview from "../components/StationOverview";
+import EditEntry from "../components/EditEntry";
 
 Vue.use(Router)
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
-            path: '/pug',
-            name: 'showPug',
-            component: ShowPug
+            path: '/',
+            redirect: "home"
         },
         {
-            path: '/',
+            path: '/home',
             name: 'home',
             component: Home
         },

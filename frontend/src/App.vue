@@ -1,19 +1,32 @@
 <template>
   <div id="app">
-    <ShowPug msg="Welcome to Your BuJu App"/>
+    <v-app>
+      <page-header/>
+      <!-- Sizes your content based upon application components -->
+      <v-main>
+        <!-- Provides the application the proper gutter -->
+        <v-container fluid>
+          <!-- If using vue-router -->
+          <router-view></router-view>
+        </v-container>
+      </v-main>
+
+      <v-footer app>
+        <!-- -->
+      </v-footer>
+    </v-app>
   </div>
 </template>
 
 <script>
-import ShowPug from './components/ShowPug.vue'
-
-
+import PageHeader from './components/Header.vue'
 export default {
   name: 'app',
   components: {
-    ShowPug
+    PageHeader
   }
 }
+
 </script>
 
 <style>

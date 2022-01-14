@@ -11,6 +11,8 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "vue": "^2.6.12",
+    "vue-router": "^3.5.3",
+    "vuetify": "^2.6.2",
     "axios": "^0.24.0"
   },
   "devDependencies": {
@@ -21,6 +23,15 @@
     "eslint": "^7.14.0",
     "eslint-plugin-vue": "^6.2.1",
     "vue-template-compiler": "^2.6.12"
+  },
+  "vue": {
+    "configureWebpack": {
+      "resolve": {
+        "alias": {
+          "vue$": "vue/dist/vue.esm.js"
+        }
+      }
+    }
   },
   "eslintConfig": {
     "root": true,
