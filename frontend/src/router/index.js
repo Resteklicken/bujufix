@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from "../components/Home";
-import ResultOverview from "../components/ResultOverview";
-import StudentOverview from "../components/StudentOverview";
-import StationOverview from "../components/StationOverview";
-import EditEntry from "../components/EditEntry";
+import StationsDetails from "../components/StationsDetails";
+import StudentsDetails from "../components/StudentsDetails";
+import ResultsDetails from "../components/ResultsDetails";
+import Winners from "../components/Winners";
 
 Vue.use(Router)
 
@@ -23,22 +23,22 @@ export default new Router({
         {
             path: '/results',
             name: 'results',
-            component: ResultOverview
+            component: ResultsDetails
         },
         {
             path: '/students',
             name: 'students',
-            component: StudentOverview
+            component: StudentsDetails
         },
         {
             path: '/stations',
             name: 'stations',
-            component: StationOverview
+            component: StationsDetails
         },
         {
-            path: '/edit',
-            name: 'edit',
-            component: EditEntry
+            path: '/winners',
+            name: 'winners',
+            component: Winners
         },
     ]
 })

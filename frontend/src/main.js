@@ -4,6 +4,7 @@ import router from "./router"
 import Vuetify from "vuetify"
 import Panel from "./components/Panel.vue"
 import '../node_modules/vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
 
 
 Vue.config.productionTip = false
@@ -27,6 +28,8 @@ new Vue({
 new Vue({
   el: '#app',
   router,
-  vuetify: new Vuetify({}),
+  vuetify: new Vuetify({icons: {
+      iconfont: 'mdi',
+    },}),
   render: h => h(App)
 })

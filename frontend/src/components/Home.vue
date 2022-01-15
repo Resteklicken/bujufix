@@ -1,43 +1,24 @@
 <template>
   <v-layout column>
-    <v-flex xs6 offset-xs3>
+    <v-flex xs6 >
       <panel title="Übersicht">
-        <form
-            name="tab-tracker-form"
-            autocomplete="off">
-          <v-text-field
-              label="Email"
-          ></v-text-field>
-          <br>
-          <v-text-field
-              label="Password"
-              type="password"
-              autocomplete="new-password"
-          ></v-text-field>
-        </form>
+        <Students/>
         <br>
-        <StudentOverview/>
-        <StationOverview/>
-        <ResultOverview/>
-        <div class="danger-alert"/>
+        <Stations/>
         <br>
-        <v-btn
-            dark
-            class="cyan">
-          Register
-        </v-btn>
+        <Results/>
       </panel>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import ResultOverview from "./ResultOverview";
-import StudentOverview from "./StudentOverview";
-import StationOverview from "./StationOverview";
+import Stations from "./Stations";
+import Students from "./Students";
+import Results from "./Results";
 export default {
   name: 'Home',
-  components: {StationOverview, StudentOverview, ResultOverview},
+  components: {Stations, Students, Results},
 }
 </script>
 

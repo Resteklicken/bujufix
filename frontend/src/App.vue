@@ -7,7 +7,7 @@
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
           <!-- If using vue-router -->
-          <router-view></router-view>
+            <router-view></router-view>
         </v-container>
       </v-main>
 
@@ -36,6 +36,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
