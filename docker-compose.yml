@@ -10,6 +10,7 @@ services:
     volumes:
      - ./backend/:/backend
      - /backend/node_modules
+     - db:/database/run/mysqld
 
   bujufix-frontend:
     build:
@@ -29,16 +30,18 @@ services:
     depends_on:
       - proxy
     environment:
-      MYSQL_DATABASE: bujufixdb
-      MYSQL_USER: buju
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MARIADB_DATABASE_FILE: /run/secrets/mariadb_databasename
+      MARIADB_USER_FILE: /run/secrets/mariadb_username
+      MARIADB_PASSWORD_FILE: /run/secrets/mariadb_password
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mariadb_root_password
     volumes:
       - db:/var/run/mysqld
     network_mode: "none"
     secrets:
-      - mysql_password
-      - mysql_root_password
+      - mariadb_password
+      - mariadb_root_password
+      - mariadb_databasename
+      - mariadb_username
 
   adminer:
     image: adminer
@@ -68,7 +71,11 @@ networks:
   bujufix:
 
 secrets:
-    mysql_root_password:
-      file: ./db/secrets/mysql_root_password
-    mysql_password:
-      file: ./db/secrets/mysql_password
+    mariadb_root_password:
+      file: db/secrets/mariadb_root_password
+    mariadb_password:
+      file: db/secrets/mariadb_password
+    mariadb_databasename:
+      file: db/secrets/mariadb_databasename
+    mariadb_username:
+      file: db/secrets/mariadb_username

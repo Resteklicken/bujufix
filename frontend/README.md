@@ -16,3 +16,16 @@ die App gebaut und auf localhost:8080 bereitgestellt oder mit
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 ```  
 die Entwicklungsversion gestartet und auf localhost:8080 mit Hot Reloading genutzt werden.
+
+
+## Datenbank
+
+Login über Adminer mit
+``` 
+Server: localhost:/var/run/mysqld/mysqld.sock   
+Username: awesomeuser oder root
+Password: password oder super-secret
+Database: bujufixdb
+```
+Achtung: Die MariaDB erstellt den Benutzer beim Initialisieren leider nicht richtig. Daher muss man sich zuallererst als root anmelden und einen entsprechenden Benutzer erstellen.
+---

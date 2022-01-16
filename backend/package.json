@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.2",
-    "sequelize": "^6.13.0",
+    "sequelize": "^5.22.5",
+    "mariadb": "^2.5.5",
     "morgan": "^1.10.0",
     "cors": "^2.8.5",
     "body-parser": "^1.19.1"

@@ -1,27 +1,18 @@
 const express = require('express')
+const {sequelize} = require('./models')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-
-console.log("Hello, benis!")
+const config = require('./config/config')
 
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/status', (req, res) => {
-    console.log("Hi there!")
-    res.send({
-        message: 'Hello, world!'
-    })
-})
+require('./routes')(app)
 
-app.get('/showPug', (req, res) => {
-    /*res.send({
-        message: `Your message was ${req.body.message}`
-    })*/
-    //console.log("req received")
-    res.sendFile('/backend/src/assets/pug.jpg')
+sequelize.sync().then(() => {
+    app.listen(config.port || 8080)
+    console.log(`Server started.`)
 })
-app.listen(process.env.PORT || 8080)
