@@ -141,7 +141,7 @@
           color="primary"
           @click="initialize"
       >
-        Reset
+        Neu laden
       </v-btn>
     </template>
   </v-data-table>
@@ -149,7 +149,7 @@
 
 <script>
 export default {
-  name: 'ResultOverview',
+  name: 'StationOverview',
   data: () => ({
   dialog: false,
   dialogDelete: false,
