@@ -1,12 +1,14 @@
 const {Result} = require('../models')
+const {Student} = require('../models')
+const {Station} = require('../models')
 
 module.exports = {
     async newResult (req, res) {
         try {
             const result = await Result.create(req.body)
             const resultJson = result.toJSON()
-            res.send({
-                result: resultJson,
+            res.send(200, {
+                message: "Das Ergebnis wurde erfolgreich erstellt",
             })
         } catch (err) {
             res.status(400).send({
@@ -14,21 +16,32 @@ module.exports = {
             })
         }
     },
+
     async showList (req, res) {
         try {
             let number = parseInt(req.params.number)
             let results = null;
             if (number > 0) {
                 results = await Result.findAll({
-                    limit: number
+                    limit: number,
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
+                    include: [{
+                        model: Station,
+                        attributes:['id', 'name']},
+                        {model: Student,
+                        attributes:['id', 'name']},]
                 })
             } else {
-                results = await Result.findAll({})
+                results = await Result.findAll({
+
+                })
             }
             res.send(results)
         } catch (err) {
             res.status(500).send({
-                error: 'Beim Abrufen der Ergebnisse trat ein Fehler auf.'
+                error: 'Beim Abrufen der Ergebnisse trat ein Fehler auf.' + err
             })
         }
     },

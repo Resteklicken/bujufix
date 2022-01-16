@@ -1,3 +1,5 @@
+// noinspection JSVoidFunctionReturnValueUsed
+
 module.exports = (sequelize, DataTypes) => {
     const Student = sequelize.define(
         'Student',
@@ -15,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         })
 
     Student.associate = function (models) {
-        Student.belongsToMany(models.Station, { through: models.Result });
+        Student.belongsToMany(models.Station, { through: models.Result , as: 'Station'});
     }
 
     return Student

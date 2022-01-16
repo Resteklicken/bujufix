@@ -109,6 +109,8 @@
 
 <script>
 import ResultService from "../services/ResultService";
+import StationService from "../services/StationService";
+import StudentService from "../services/StudentService";
 
 export default {
   name: 'ResultOverview',
@@ -116,8 +118,8 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: 'Schüler', value: 'studentName' },
-      { text: 'Station', value: 'stationName' },
+      { text: 'Schüler', value: 'name' },
+      { text: 'Station', value: 'station' },
       { text: 'Ergebnis', value: 'score' },
       { text: 'Aktionen', value: 'actions', sortable: false },
 
@@ -125,12 +127,14 @@ export default {
     results: [],
     editedIndex: -1,
     editedItem: {
-      id: '',
-      name: '',
+      score: '',
+      StudentId: '',
+      StationId:''
     },
     defaultItem: {
-      id: '',
-      name: '',
+      score: '',
+      StudentId: '',
+      StationId:''
     },
   }),
   computed: {
@@ -151,11 +155,21 @@ export default {
   },
   methods: {
     async initialize () {
-      this.results = (await ResultService.show(0)).data
+      try {
+        let tempresults = (await ResultService.show(0)).data
+        for (const entry of tempresults) {
+          entry.name = (await StudentService.find(entry.StudentId)).data.student.name
+          entry.station = (await StationService.find(entry.StationId)).data.station.name
+        }
+        this.results = tempresults
+      } catch(error) {
+            console.log(error.response.data)
+      }
     },
     editItem (item) {
       this.editedIndex = this.results.indexOf(item)
-      item.id = this.results[this.editedIndex].id
+      item.StudentId = this.results[this.editedIndex].StudentId
+      item.StationId = this.results[this.editedIndex].StationId
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
@@ -196,7 +210,6 @@ export default {
               alert(error.response.data)
             })
       } else {
-        //this.results.push(this.editedItem)
         ResultService.newResult(this.editedItem)
             .then(() => {
               this.initialize()

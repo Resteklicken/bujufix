@@ -29,6 +29,24 @@ module.exports = {
             res.send(500, 'Beim Abrufen der Schüler trat ein Fehler auf.')
         }
     },
+
+    async find (req, res) {
+        try {
+            const studentID = req.params.id
+            const student = await Student.findByPk(studentID)
+
+            if (!student) {
+                res.send(403, 'Der Schüler konnte nicht gefunden werden.')
+            }
+
+            res.status(200).send({
+                student
+            })
+        } catch (err) {
+            res.send(500, 'Beim Finden des Schülers trat ein Fehler auf.')
+        }
+    },
+
     async edit (req, res) {
         try {
             await Student.update(req.body, {

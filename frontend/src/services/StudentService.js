@@ -10,6 +10,10 @@ export default {
         return Api().post('students/new', student)
     },
 
+    find (studentId) {
+        return Api().get(`students/find/${studentId}`, studentId)
+    },
+
     editStudent (student) {
         return Api().post(`students/edit/${student.id}`, student)
     },

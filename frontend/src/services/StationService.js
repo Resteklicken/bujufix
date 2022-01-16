@@ -10,6 +10,10 @@ export default {
         return Api().post('stations/new', station)
     },
 
+    find (stationId) {
+        return Api().get(`stations/find/${stationId}`, stationId)
+    },
+
     editStation (station) {
         return Api().post(`stations/edit/${station.id}`, station)
     },

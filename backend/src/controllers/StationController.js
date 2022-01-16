@@ -1,4 +1,4 @@
-const {Station} = require('../models')
+const {Station, Student} = require('../models')
 
 module.exports = {
     async newStation (req, res) {
@@ -44,6 +44,23 @@ module.exports = {
             res.status(500).send({
                 error: 'Beim Ändern der Station trat ein Fehler auf.'
             })
+        }
+    },
+
+    async find (req, res) {
+        try {
+            const stationID = req.params.id
+            const station = await Station.findByPk(stationID)
+
+            if (!station) {
+                res.send(403, 'Die Station konnte nicht gefunden werden.')
+            }
+
+            res.status(200).send({
+                station
+            })
+        } catch (err) {
+            res.send(500, 'Beim Finden der Station trat ein Fehler auf.')
         }
     },
 

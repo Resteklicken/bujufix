@@ -11,10 +11,10 @@ export default {
     },
 
     editResult (result) {
-        return Api().post(`results/edit/${result.id}`, result)
+        return Api().post(`results/edit/${result.StudentId}&${result.StationId}`, result)
     },
 
     deleteResult (result) {
-        return Api().delete(`results/delete/${result.id}`, result)
+        return Api().delete(`results/delete/${result.StudentId}&${result.StationId}`, result)
     }
 }

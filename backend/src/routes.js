@@ -14,6 +14,8 @@ module.exports = (app) => {
 
     app.post('/students/new', StudentController.newStudent)
 
+    app.get('/students/find/:id', StudentController.find)
+
     app.post('/students/edit/:id', StudentController.edit)
 
     app.delete('/students/delete/:id', StudentController.delete)
@@ -23,6 +25,8 @@ module.exports = (app) => {
     app.post('/stations/new', StationController.newStation)
 
     app.post('/stations/edit/:id', StationController.edit)
+
+    app.get('/stations/find/:id', StationController.find)
 
     app.delete('/stations/delete/:id', StationController.delete)
 
