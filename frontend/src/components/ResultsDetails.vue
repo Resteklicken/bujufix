@@ -36,6 +36,36 @@
               <v-container>
                 <v-row>
                   <v-col
+                      class="d-flex"
+                      cols="12"
+                      sm="6"
+                  >
+                    <v-select
+                        :items="students"
+                        v-model="editedItem.name"
+                        item-text="name"
+                        label="Schüler"
+                        :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
+                        dense
+                        outlined
+                    ></v-select>
+                  </v-col>
+                  <v-col
+                      class="d-flex"
+                      cols="12"
+                      sm="6"
+                  >
+                    <v-select
+                        :items="stations"
+                        v-model="editedItem.station"
+                        item-text="name"
+                        label="Station"
+                        :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
+                        dense
+                        outlined
+                    ></v-select>
+                  </v-col>
+                  <v-col
                       cols="12"
                       sm="6"
                       md="4"
@@ -43,6 +73,7 @@
                     <v-text-field
                         v-model="editedItem.score"
                         label="Ergebnis"
+                        :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -125,16 +156,22 @@ export default {
 
     ],
     results: [],
+    students: [],
+    stations:[],
     editedIndex: -1,
     editedItem: {
       score: '',
       StudentId: '',
-      StationId:''
+      StationId:'',
+      name: '',
+      station: ''
     },
     defaultItem: {
       score: '',
       StudentId: '',
-      StationId:''
+      StationId:'',
+      name: '',
+      station: ''
     },
   }),
   computed: {
@@ -161,6 +198,8 @@ export default {
           entry.name = (await StudentService.find(entry.StudentId)).data.student.name
           entry.station = (await StationService.find(entry.StationId)).data.station.name
         }
+        this.students = (await StudentService.show(0)).data
+        this.stations = (await StationService.show(0)).data
         this.results = tempresults
       } catch(error) {
             console.log(error.response.data)
@@ -203,14 +242,30 @@ export default {
     },
     save () {
       if (this.editedIndex > -1) {
-        ResultService.editResult(this.editedItem)
+        let newElement = this.editedItem
+        newElement.StationId = this.stationIDfromName(newElement.station)
+        newElement.StudentId = this.studentIDfromName(newElement.name)
+        delete newElement.name
+        delete newElement.station
+        delete newElement.updatedAt
+        delete newElement.createdAt
+        console.log(newElement)
+        ResultService.editResult(newElement)
             .then(() => {
               this.initialize()
             }).catch((error) => {
               alert(error.response.data)
             })
       } else {
-        ResultService.newResult(this.editedItem)
+        let newElement = this.editedItem
+        newElement.StationId = this.stationIDfromName(newElement.station)
+        newElement.StudentId = this.studentIDfromName(newElement.name)
+        delete newElement.name
+        delete newElement.station
+        delete newElement.updatedAt
+        delete newElement.createdAt
+        console.log(newElement)
+        ResultService.newResult(newElement)
             .then(() => {
               this.initialize()
             }).catch((error) => {
@@ -219,6 +274,14 @@ export default {
       }
       this.close()
     },
+    stationIDfromName (name) {
+      let temp = this.stations.find(i => i.name === name)
+      return temp.id
+    },
+    studentIDfromName (name) {
+      let temp = this.students.find(i => i.name === name)
+      return temp.id
+    }
   },
 }
 </script>

@@ -109,6 +109,7 @@
 
 <script>
 import StationService from "../services/StationService";
+//TODO: Copy input validation over from results
 
 export default {
   name: 'StationOverview',
