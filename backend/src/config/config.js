@@ -6,13 +6,14 @@ module.exports = {
         password: 'password',
         database: 'bujufixdb',
         options: {
-            dialect: 'mariadb',
+            dialect: 'mysql',
             dialectOptions: {
                 socketPath: '/database/run/mysqld/mysqld.sock'
             }
         }
     }
 }
+
 
 
 

@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-    sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+    const Student = sequelize.define(
         'Student',
         {id: {
             type: DataTypes.INTEGER,
@@ -13,4 +13,10 @@ module.exports = (sequelize, DataTypes) =>
         }
         })
 
+    Student.associate = function (models) {
+        Student.belongsToMany(models.Station, { through: models.Result });
+    }
+
+    return Student
+}
 
