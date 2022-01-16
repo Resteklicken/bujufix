@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
             },
             name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                unique: true
             }
         })
 
@@ -19,4 +20,5 @@ module.exports = (sequelize, DataTypes) => {
 
     return Station
 }
+
 

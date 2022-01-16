@@ -168,7 +168,9 @@ export default {
         .then(() => {
           this.initialize()
           this.closeDelete()}
-      )
+      ).catch((error) => {
+        alert(error.response.data)
+      })
     },
     close () {
       this.dialog = false
@@ -186,19 +188,21 @@ export default {
     },
     save () {
       if (this.editedIndex > -1) {
-        //Object.assign(this.students[this.editedIndex], this.editedItem)
         StudentService.editStudent(this.editedItem)
           .then(() => {
             this.initialize()
-          })
-    } else {
-        //this.students.push(this.editedItem)
+          }).catch((error) => {
+          alert(error.response.data)
+        })
+      } else {
         StudentService.newStudent(this.editedItem)
           .then(() => {
             this.initialize()
-          })
-    }
-      this.close()
+            this.close()
+          }).catch((error) => {
+            alert(error.response.data)
+        })
+      }
     },
   },
 }

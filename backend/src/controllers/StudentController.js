@@ -5,13 +5,12 @@ module.exports = {
         try {
             const student = await Student.create(req.body)
             const studentJson = student.toJSON()
-            res.send({
-                student: studentJson,
+            res.status(200).send({
+                message: "Schüler erfolgreich hinzugefügt.",
+                student: studentJson
             })
         } catch (err) {
-            res.status(400).send({
-                error: 'Beim Erstellen des Schülers trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Erstellen des Schülers trat ein Fehler auf.')
         }
     },
     async showList (req, res) {
@@ -25,11 +24,9 @@ module.exports = {
             } else {
                 students = await Student.findAll({})
             }
-            res.send(students)
+            res.status(200).send(students)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Abrufen der Schüler trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Abrufen der Schüler trat ein Fehler auf.')
         }
     },
     async edit (req, res) {
@@ -39,11 +36,11 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.send(req.body)
-        } catch (err) {
-            res.status(500).send({
-                error: 'Beim Ändern des Schülers trat ein Fehler auf.'
+            res.status(200).send({
+                message: "Schüler erfolgreich bearbeitet."
             })
+        } catch (err) {
+            res.send(500, 'Beim Bearbeiten des Schülers trat ein Fehler auf.')
         }
     },
 
@@ -53,17 +50,15 @@ module.exports = {
             const student = await Student.findByPk(studentID)
 
             if (!student) {
-                return res.status(403).send({
-                    error: 'Der zu löschende Schüler konnte nicht gefunden werden.' + studentID
-                })
+                res.send(403, 'Der zu löschende Schüler konnte nicht gefunden werden.')
             }
             await student.destroy()
-            res.send(student)
-        } catch (err) {
-            res.status(500).send({
-                error: 'Beim Löschen des Schülers trat ein Fehler auf.' + err
-
+            res.status(200).send({
+                message: "Schüler erfolgreich gelöscht.",
+                student
             })
+        } catch (err) {
+            res.send(500, 'Beim Löschen des Schülers trat ein Fehler auf.')
         }
     }
 }
