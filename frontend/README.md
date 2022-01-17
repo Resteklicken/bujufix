@@ -27,5 +27,13 @@ Username: awesomeuser oder root
 Password: password oder super-secret
 Database: bujufixdb
 ```
-Achtung: Die MariaDB erstellt den Benutzer beim Initialisieren leider nicht richtig. Daher muss man sich zuallererst als root anmelden und einen entsprechenden Benutzer erstellen.
+Die Verwendung von zwei Named Volumes im Datenbank Service
+```
+volumes:
+      - db:/var/run/mysqld
+      - data:/var/lib/mysql
+```
+ermöglicht zum einen die netzwerklose Kommunikation zu Adminer und zum Backend über den mysqld Unix socket, zum anderen auch die Persistenz der Daten nach `docker-compose down` und `docker-compose up`.
+Mounted man nur ein  Volume in den socket, können die Services zwar miteinander kommunizieren, die Datenbank ist aber bei jedem Start wieder leer (trotz fehlendem `-v`Flag).
+
 ---

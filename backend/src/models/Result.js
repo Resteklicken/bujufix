@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.DECIMAL(10, 2),
                 allowNull: false
             },
-
             StudentId: {
                 type: DataTypes.INTEGER,
                 references: {

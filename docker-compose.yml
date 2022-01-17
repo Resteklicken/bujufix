@@ -36,6 +36,7 @@ services:
       MARIADB_ROOT_PASSWORD_FILE: /run/secrets/mariadb_root_password
     volumes:
       - db:/var/run/mysqld
+      - data:/var/lib/mysql
     network_mode: "none"
     secrets:
       - mariadb_password
@@ -64,11 +65,12 @@ services:
     ports:
       - 8000:8000
 
-volumes:
-    db:
-
 networks:
   bujufix:
+
+volumes:
+  db:
+  data:
 
 secrets:
     mariadb_root_password:
