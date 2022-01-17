@@ -34,6 +34,7 @@
 
             <v-card-text>
               <v-container>
+                <v-form v-model="isValid">
                 <v-row>
                   <v-col
                       class="d-flex"
@@ -48,6 +49,7 @@
                         :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
                         dense
                         outlined
+                        required
                     ></v-select>
                   </v-col>
                   <v-col
@@ -63,6 +65,7 @@
                         :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
                         dense
                         outlined
+                        required
                     ></v-select>
                   </v-col>
                   <v-col
@@ -73,10 +76,12 @@
                     <v-text-field
                         v-model="editedItem.score"
                         label="Ergebnis"
-                        :rules="[v => Boolean(Object.keys(v || {})[0]) || 'Erforderlich']"
+                        :rules="[v => !!v || 'Erforderlich']"
+                        required
                     ></v-text-field>
                   </v-col>
                 </v-row>
+                </v-form>
               </v-container>
             </v-card-text>
 
@@ -93,6 +98,7 @@
                   color="blue darken-1"
                   text
                   @click="save"
+                  :disabled="!isValid"
               >
                 Speichern
               </v-btn>
@@ -101,7 +107,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Wollen Sie diesen Eintrag wirklich löschen?</v-card-title>
+            <v-card-title class="text-h5 löschen">Wollen Sie diesen Eintrag wirklich löschen?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Abbrechen</v-btn>
@@ -158,6 +164,7 @@ export default {
     results: [],
     students: [],
     stations:[],
+    isValid: true,
     editedIndex: -1,
     editedItem: {
       score: '',
@@ -290,5 +297,9 @@ export default {
 <style scoped>
 .addIcon {
   padding-right: 10px;
+}
+
+.löschen {
+  word-break: normal; /* maybe !important  */
 }
 </style>

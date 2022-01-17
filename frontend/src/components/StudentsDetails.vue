@@ -40,10 +40,14 @@
                       sm="6"
                       md="4"
                   >
-                    <v-text-field
-                        v-model="editedItem.name"
-                        label="Name"
-                    ></v-text-field>
+                    <v-form v-model="isValid">
+                      <v-text-field
+                          label="Name"
+                          v-model="editedItem.name"
+                          :rules="[v => !!v || 'Erforderlich']"
+                          required
+                      ></v-text-field>
+                    </v-form>
                   </v-col>
                 </v-row>
               </v-container>
@@ -62,6 +66,7 @@
                   color="blue darken-1"
                   text
                   @click="save"
+                  :disabled="!isValid"
               >
                 Speichern
               </v-btn>
@@ -70,7 +75,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Wollen Sie diesen Eintrag wirklich löschen?</v-card-title>
+            <v-card-title class="text-h5 löschen">Wollen Sie diesen Eintrag wirklich löschen?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Abbrechen</v-btn>
@@ -109,7 +114,6 @@
 
 <script>
 import StudentService from "../services/StudentService";
-//TODO: Copy input validation over from results
 
 export default {
   name: 'StudentOverview',
@@ -122,6 +126,7 @@ export default {
 
   ],
   students: [],
+  isValid: true,
   editedIndex: -1,
   editedItem: {
     id: '',
@@ -213,5 +218,8 @@ export default {
 <style scoped>
 .addIcon {
   padding-right: 10px;
+}
+.löschen {
+  word-break: normal; /* maybe !important  */
 }
 </style>
