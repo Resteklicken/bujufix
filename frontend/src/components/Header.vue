@@ -83,16 +83,17 @@
                 name: 'home'
               }"
         >
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>
+          <v-list-item class="cyan lighten-3">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
               Bujufix
-          </v-list-item-title>
-        </v-list-item>
+            </v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
         </router-link>
-        <router-link
+          <router-link
             text
             dark
             class="nav-link"
@@ -150,6 +151,20 @@
         </router-link>
       </v-list-item-group>
     </v-list>
+    <template v-slot:append>
+      <v-divider></v-divider>
+      <v-list-item class="orange lighten-2">
+      <v-list-item-icon>
+        <v-icon>mdi-trophy-outline</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title
+          text
+          dark
+          class="nav-link"
+          onclick="window.location = 'http://localhost:8000/admin';">
+        Admin
+      </v-list-item-title></v-list-item>
+    </template>
   </v-navigation-drawer>
     </div>
 </template>
