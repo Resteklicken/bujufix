@@ -15,10 +15,13 @@ module.exports = {
             let students = null;
             if (number > 0) {
                 students = await Student.findAll({
-                    limit: number
+                    limit: number,
+                    attributes: ['id', 'name']
                 })
             } else {
-                students = await Student.findAll({})
+                students = await Student.findAll({
+                    attributes: ['id', 'name']
+                })
             }
             res.status(200).send(students)
         } catch (err) {
@@ -29,7 +32,12 @@ module.exports = {
     async find (req, res) {
         try {
             const studentID = req.params.id
-            const student = await Student.findByPk(studentID)
+            const student = await Student.findOne({
+                where: {
+                    id: studentID,
+                },
+                attributes: ['id', 'name']
+            })
 
             if (!student) {
                 res.send(403, 'Der Schüler konnte nicht gefunden werden.')

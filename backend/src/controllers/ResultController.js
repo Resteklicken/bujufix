@@ -19,9 +19,7 @@ module.exports = {
             if (number > 0) {
                 results = await Result.findAll({
                     limit: number,
-                    attributes: {
-                        exclude: ['createdAt', 'updatedAt']
-                    },
+                    attributes: ['StudentId', 'StationId', 'score'],
                     include: [{
                         model: Station,
                         attributes:['id', 'name']},
@@ -30,7 +28,7 @@ module.exports = {
                 })
             } else {
                 results = await Result.findAll({
-
+                    attributes: ['StudentId', 'StationId', 'score'],
                 })
             }
             res.send(results)

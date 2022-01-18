@@ -4,10 +4,7 @@ module.exports = {
     async newStation (req, res) {
         try {
             const station = await Station.create(req.body)
-            const stationJson = station.toJSON()
-            res.send({
-                station: stationJson,
-            })
+                res.send(200, "Die Station wurde erfolgreich erstellt")
         } catch (err) {
             res.send(500, 'Beim Erstellen der Station trat ein Fehler auf.')
         }
@@ -18,10 +15,17 @@ module.exports = {
             let stations = null;
             if (number > 0) {
                 stations = await Station.findAll({
-                    limit: number
+                    limit: number,
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
                 })
             } else {
-                stations = await Station.findAll({})
+                stations = await Station.findAll(
+                    { attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
+                })
             }
             res.send(stations)
         } catch (err) {
@@ -35,7 +39,7 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.send(req.body)
+            res.send(200, "Die Station wurde erfolgreich bearbeitet.")
         } catch (err) {
             res.send(500, 'Beim Ändern der Station trat ein Fehler auf.')
         }
@@ -44,7 +48,12 @@ module.exports = {
     async find (req, res) {
         try {
             const stationID = req.params.id
-            const station = await Station.findByPk(stationID)
+            const station = await Station.findOne({
+                where: {
+                    id: stationID,
+                },
+                attributes: ['id', 'name']
+            })
 
             if (!station) {
                 res.send(403, 'Die Station konnte nicht gefunden werden.')

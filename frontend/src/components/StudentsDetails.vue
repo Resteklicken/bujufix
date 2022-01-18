@@ -172,7 +172,6 @@ export default {
       this.dialogDelete = true
     },
     deleteItemConfirm () {
-      //this.students.splice(this.editedIndex, 1)
       StudentService.deleteStudent(this.students[this.editedIndex])
         .then(() => {
           this.initialize()
@@ -191,7 +190,6 @@ export default {
     },
     closeDelete () {
       this.dialogDelete = false
-      this.$refs.form.reset()
       this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
@@ -201,6 +199,7 @@ export default {
       if (this.editedIndex > -1) {
         StudentService.editStudent(this.editedItem)
           .then(() => {
+            this.close()
             this.initialize()
           }).catch((error) => {
           alert(error.response.data)
@@ -208,8 +207,8 @@ export default {
       } else {
         StudentService.newStudent(this.editedItem)
           .then(() => {
-            this.initialize()
             this.close()
+            this.initialize()
           }).catch((error) => {
             alert(error.response.data)
         })

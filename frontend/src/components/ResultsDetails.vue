@@ -203,6 +203,7 @@ export default {
     async initialize () {
       try {
         let tempresults = (await ResultService.show(0)).data
+        console.log(tempresults)
         for (const entry of tempresults) {
           entry.name = (await StudentService.find(entry.StudentId)).data.student.name
           entry.station = (await StationService.find(entry.StationId)).data.station.name
@@ -218,6 +219,8 @@ export default {
       this.editedIndex = this.results.indexOf(item)
       item.StudentId = this.results[this.editedIndex].StudentId
       item.StationId = this.results[this.editedIndex].StationId
+      delete item.name
+      delete item.station
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
@@ -258,8 +261,6 @@ export default {
       newElement.score = newElement.score.replace(/,/g, '.')
       delete newElement.name
       delete newElement.station
-      delete newElement.updatedAt
-      delete newElement.createdAt
       console.log(newElement)
       if (this.editedIndex > -1) {
         ResultService.editResult(newElement)
