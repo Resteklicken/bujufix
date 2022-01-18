@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             StationId: {
                 type: DataTypes.INTEGER,
                     references: {
-                    model: sequelize.models.Station, // 'Actors' would also work
+                    model: sequelize.models.Station,
                         key: 'id'
                 }
             }

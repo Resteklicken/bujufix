@@ -34,7 +34,7 @@
 
             <v-card-text>
               <v-container>
-                <v-form v-model="isValid">
+                <v-form v-model="isValid" ref="form">
                 <v-row>
                   <v-col
                       class="d-flex"
@@ -74,10 +74,12 @@
                       md="4"
                   >
                     <v-text-field
+                        id="score-field"
                         v-model="editedItem.score"
                         label="Ergebnis"
                         :rules="[v => !!v || 'Erforderlich']"
                         required
+                        clearable
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -235,6 +237,7 @@ export default {
     },
     close () {
       this.dialog = false
+      this.$refs.form.reset()
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -242,21 +245,23 @@ export default {
     },
     closeDelete () {
       this.dialogDelete = false
+      this.$refs.form.reset()
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       })
     },
     save () {
+      let newElement = this.editedItem
+      newElement.StationId = this.stationIDfromName(newElement.station)
+      newElement.StudentId = this.studentIDfromName(newElement.name)
+      newElement.score = newElement.score.replace(/,/g, '.')
+      delete newElement.name
+      delete newElement.station
+      delete newElement.updatedAt
+      delete newElement.createdAt
+      console.log(newElement)
       if (this.editedIndex > -1) {
-        let newElement = this.editedItem
-        newElement.StationId = this.stationIDfromName(newElement.station)
-        newElement.StudentId = this.studentIDfromName(newElement.name)
-        delete newElement.name
-        delete newElement.station
-        delete newElement.updatedAt
-        delete newElement.createdAt
-        console.log(newElement)
         ResultService.editResult(newElement)
             .then(() => {
               this.initialize()
@@ -264,14 +269,6 @@ export default {
               alert(error.response.data)
             })
       } else {
-        let newElement = this.editedItem
-        newElement.StationId = this.stationIDfromName(newElement.station)
-        newElement.StudentId = this.studentIDfromName(newElement.name)
-        delete newElement.name
-        delete newElement.station
-        delete newElement.updatedAt
-        delete newElement.createdAt
-        console.log(newElement)
         ResultService.newResult(newElement)
             .then(() => {
               this.initialize()

@@ -3,12 +3,8 @@ const {Student} = require('../models')
 module.exports = {
     async newStudent (req, res) {
         try {
-            const student = await Student.create(req.body)
-            const studentJson = student.toJSON()
-            res.status(200).send({
-                message: "Schüler erfolgreich hinzugefügt.",
-                student: studentJson
-            })
+            await Student.create(req.body)
+            res.send(200, 'Der Schüler wurde erfolgreich erstellt.')
         } catch (err) {
             res.send(500, 'Beim Erstellen des Schülers trat ein Fehler auf.')
         }
@@ -54,9 +50,7 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.status(200).send({
-                message: "Schüler erfolgreich bearbeitet."
-            })
+            res.send(200, 'Schüler erfolgreich bearbeitet.')
         } catch (err) {
             res.send(500, 'Beim Bearbeiten des Schülers trat ein Fehler auf.')
         }
@@ -71,10 +65,7 @@ module.exports = {
                 res.send(403, 'Der zu löschende Schüler konnte nicht gefunden werden.')
             }
             await student.destroy()
-            res.status(200).send({
-                message: "Schüler erfolgreich gelöscht.",
-                student
-            })
+            res.send(200, 'Schüler erfolgreich gelöscht.')
         } catch (err) {
             res.send(500, 'Beim Löschen des Schülers trat ein Fehler auf.')
         }

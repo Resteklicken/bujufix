@@ -40,12 +40,15 @@
                       sm="6"
                       md="4"
                   >
-                    <v-form v-model="isValid">
+                    <v-form v-model="isValid" ref="form">
                       <v-text-field
                           label="Name"
                           v-model="editedItem.name"
                           :rules="[v => !!v || 'Erforderlich']"
                           required
+                          counter
+                          maxlength="125"
+                          hint="Namen des Schülers eingeben"
                       ></v-text-field>
                     </v-form>
                   </v-col>
@@ -180,14 +183,16 @@ export default {
     },
     close () {
       this.dialog = false
+      this.$refs.form.reset()
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       })
     },
     closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
+      this.dialogDelete = false
+      this.$refs.form.reset()
+      this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
       })

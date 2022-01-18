@@ -9,9 +9,7 @@ module.exports = {
                 station: stationJson,
             })
         } catch (err) {
-            res.status(400).send({
-                error: 'Beim Erstellen der Station trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Erstellen der Station trat ein Fehler auf.')
         }
     },
     async showList (req, res) {
@@ -27,9 +25,7 @@ module.exports = {
             }
             res.send(stations)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Abrufen der Stationen trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Abrufen der Station trat ein Fehler auf.')
         }
     },
     async edit (req, res) {
@@ -41,9 +37,7 @@ module.exports = {
             })
             res.send(req.body)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Ändern der Station trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Ändern der Station trat ein Fehler auf.')
         }
     },
 
@@ -70,16 +64,12 @@ module.exports = {
             const station = await Station.findByPk(stationID)
 
             if (!station) {
-                return res.status(403).send({
-                    error: 'Die zu löschende Station konnte nicht gefunden werden.' + stationID
-                })
+                return res.send(403, 'Die zu löschende Station konnte nicht gefunden werden.')
             }
             await station.destroy()
             res.send(station)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Löschen der Station trat ein Fehler auf.' + err
-            })
+            res.send(500, 'Beim Löschen der Station trat ein Fehler auf.')
         }
     }
 }

@@ -6,14 +6,9 @@ module.exports = {
     async newResult (req, res) {
         try {
             const result = await Result.create(req.body)
-            const resultJson = result.toJSON()
-            res.send(200, {
-                message: "Das Ergebnis wurde erfolgreich erstellt",
-            })
+            res.send(200, "Das Ergebnis wurde erfolgreich erstellt")
         } catch (err) {
-            res.status(400).send({
-                error: 'Beim Erstellen des Ergebnisses trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Erstellen des Ergebnisses trat ein Fehler auf.')
         }
     },
 
@@ -40,9 +35,7 @@ module.exports = {
             }
             res.send(results)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Abrufen der Ergebnisse trat ein Fehler auf.' + err
-            })
+            res.send(500, 'Beim Abrufen des Ergebnisses trat ein Fehler auf.')
         }
     },
     async edit (req, res) {
@@ -55,9 +48,7 @@ module.exports = {
             })
             res.send(req.body)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Ändern des Ergebnisses trat ein Fehler auf.'
-            })
+            res.send(500, 'Beim Ändern des Ergebnisses trat ein Fehler auf.')
         }
     },
 
@@ -72,16 +63,12 @@ module.exports = {
                 }
             })
             if (!result) {
-                return res.status(403).send({
-                    error: 'Das zu löschende Ergebnis konnte nicht gefunden werden. ' + studentId + " " + stationId
-                })
+                res.send(403, 'Das zu löschende Ergebnis konnte nicht gefunden werden.')
             }
             await result.destroy()
             res.send(result)
         } catch (err) {
-            res.status(500).send({
-                error: 'Beim Löschen des Ergebnisses trat ein Fehler auf.' + err
-            })
+            res.send(500, 'Beim Löschen des Ergebnisses trat ein Fehler auf.')
         }
     }
 }
