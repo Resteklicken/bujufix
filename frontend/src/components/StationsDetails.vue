@@ -23,8 +23,8 @@
                 v-bind="attrs"
                 v-on="on"
             >
-              <v-icon class="addIcon">mdi-plus</v-icon>
-              Station hinzufügen
+              <v-icon class="addIcon pr-sm-3">mdi-plus</v-icon>
+              <div v-if="$vuetify.breakpoint.smAndUp">Station hinzufügen</div>
             </v-btn>
           </template>
           <v-card>
@@ -220,9 +220,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.addIcon {
-  padding-right: 10px;
-}
+
 .löschen {
   word-break: normal; /* maybe !important  */
 }

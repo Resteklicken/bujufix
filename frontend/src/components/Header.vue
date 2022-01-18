@@ -1,6 +1,6 @@
 <template>
   <div>
-  <v-app-bar app class="cyan" dark dense>
+  <v-app-bar app class="cyan bar" dark dense>
     <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="drawer = true">
     </v-app-bar-nav-icon>
     <v-app-bar-title class="mr-4" v-if="$vuetify.breakpoint.mdAndUp || $vuetify.breakpoint.smAndDown">
@@ -115,6 +115,7 @@ export default {
 .home:hover {
   color: #E9E;
 }
+
 .winners {
   margin-left: 30px;
   padding: 7px;
