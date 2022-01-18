@@ -1,6 +1,9 @@
 <template>
+  <div>
   <v-app-bar app class="cyan" dark dense>
-    <v-app-bar-title class="mr-4">
+    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="drawer = true">
+    </v-app-bar-nav-icon>
+    <v-app-bar-title class="mr-4" v-if="$vuetify.breakpoint.mdAndUp || $vuetify.breakpoint.smAndDown">
       <router-link
           class="home"
           tag="span"
@@ -11,7 +14,7 @@
       </router-link>
     </v-app-bar-title>
 
-    <v-toolbar-items>
+    <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
       <v-btn
           text
           dark
@@ -42,10 +45,11 @@
         dark
         :to="{
           name: 'winners'
-        }">
-      Endergebnisse
+        }"
+        v-if="$vuetify.breakpoint.smAndUp">
+      <div id="auswertung" v-if="$vuetify.breakpoint.mdAndUp">Auswertung</div>
       <v-icon
-          class="trophyIcon"
+          class="trophyIcon ml-md-3"
       >
         mdi-trophy-outline
       </v-icon>
@@ -60,12 +64,46 @@
       </v-btn>
     </v-toolbar-items>
   </v-app-bar>
+  <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+  >
+    <v-list
+        nav
+        dense
+    >
+      <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+      >
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Account</v-list-item-title>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-navigation-drawer>
+    </div>
 </template>
 
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data: () => ({
+    drawer: false,
+    group: null,
+  }),
 }
 </script>
 
@@ -90,6 +128,5 @@ export default {
 
 .trophyIcon {
   color: black !important;
-  margin-left: 10px;
 }
 </style>
