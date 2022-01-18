@@ -1,7 +1,7 @@
 <template>
   <div>
-  <v-app-bar app class="cyan bar" dark dense>
-    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="drawer = true">
+  <v-app-bar app class="cyan" dark dense>
+    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndUp !== true" @click="drawer = true">
     </v-app-bar-nav-icon>
     <v-app-bar-title class="mr-4" v-if="$vuetify.breakpoint.mdAndUp || $vuetify.breakpoint.smAndDown">
       <router-link
@@ -155,7 +155,7 @@
       <v-divider></v-divider>
       <v-list-item class="orange lighten-2">
       <v-list-item-icon>
-        <v-icon>mdi-trophy-outline</v-icon>
+        <v-icon>mdi-gavel</v-icon>
       </v-list-item-icon>
       <v-list-item-title
           text
