@@ -16,15 +16,11 @@ module.exports = {
             if (number > 0) {
                 stations = await Station.findAll({
                     limit: number,
-                    attributes: {
-                        exclude: ['createdAt', 'updatedAt']
-                    },
+                    attributes: ['id', 'name']
                 })
             } else {
-                stations = await Station.findAll(
-                    { attributes: {
-                        exclude: ['createdAt', 'updatedAt']
-                    },
+                stations = await Station.findAll({
+                    attributes: ['id', 'name'],
                 })
             }
             res.send(stations)
