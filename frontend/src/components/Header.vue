@@ -71,25 +71,83 @@
   >
     <v-list
         nav
-        dense
     >
       <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="cyan--text text--accent-4"
       >
+        <router-link
+            class="home"
+            tag="span"
+            :to="{
+                name: 'home'
+              }"
+        >
         <v-list-item>
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
+          <v-list-item-title>
+              Bujufix
+          </v-list-item-title>
         </v-list-item>
-
+        </router-link>
+        <router-link
+            text
+            dark
+            class="nav-link"
+            :to="{name: 'students'}">
         <v-list-item>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Account</v-list-item-title>
+          <v-list-item-title>
+            Schüler
+         </v-list-item-title>
         </v-list-item>
+        </router-link>
+        <router-link
+            text
+            dark
+            class="nav-link"
+            :to="{name: 'stations'}">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-football</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
+              Stationen
+            </v-list-item-title>
+          </v-list-item>
+        </router-link>
+        <router-link
+            text
+            dark
+            class="nav-link"
+            :to="{name: 'results'}">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-clipboard-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
+              Ergebnisse
+            </v-list-item-title>
+          </v-list-item>
+        </router-link>
+        <router-link
+            text
+            dark
+            class="nav-link"
+            :to="{name: 'winners'}">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-trophy-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
+              Auswertung
+            </v-list-item-title>
+          </v-list-item>
+        </router-link>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
@@ -113,7 +171,7 @@ export default {
   cursor: pointer;
 }
 .home:hover {
-  color: #E9E;
+  color: #c6ebff;
 }
 
 .winners {
@@ -127,6 +185,13 @@ export default {
   color: black !important;
 }
 
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #c6ebff;
+}
 .trophyIcon {
   color: black !important;
 }
