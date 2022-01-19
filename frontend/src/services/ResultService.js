@@ -16,5 +16,9 @@ export default {
 
     deleteResult (result) {
         return Api().delete(`results/delete/${result.StudentId}&${result.StationId}`, result)
-    }
+    },
+
+    findMax () {
+        return Api().get('/winners/')
+    },
 }

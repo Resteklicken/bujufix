@@ -15,49 +15,21 @@
             color="yellow darken-1"
             class="mb-1"
         >
+          <v-toolbar-title>Beste Ergebnisse nach Station</v-toolbar-title>
+          <v-spacer></v-spacer>
           <v-text-field
               v-model="search"
               clearable
+              solo
+              color="black"
+              background-color="yellow"
               flat
-              solo-inverted
               hide-details
               prepend-inner-icon="mdi-magnify"
               label="Suchen"
+              class="md-6"
           ></v-text-field>
-          <template v-if="$vuetify.breakpoint.mdAndUp">
-            <v-spacer></v-spacer>
-            <v-select
-                v-model="sortBy"
-                flat
-                solo-inverted
-                hide-details
-                :items="keys"
-                prepend-inner-icon="mdi-magnify"
-                label="Sortieren"
-            ></v-select>
-            <v-spacer></v-spacer>
-            <v-btn-toggle
-                v-model="sortDesc"
-                mandatory
-            >
-              <v-btn
-                  large
-                  depressed
-                  color="yellow"
-                  :value="false"
-              >
-                <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn
-                  large
-                  depressed
-                  color="yellow"
-                  :value="true"
-              >
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
-            </v-btn-toggle>
-          </template>
+          <v-spacer></v-spacer>
         </v-toolbar>
       </template>
 
@@ -65,7 +37,7 @@
         <v-row>
           <v-col
               v-for="item in props.items"
-              :key="item.Station"
+              :key="item[0].Station"
               cols="12"
               sm="6"
               md="4"
@@ -73,26 +45,28 @@
           >
             <v-card>
               <v-card-title class="subheading font-weight-bold yellow accent-5">
-                {{ item.Station }}
+                {{ item[0].Station }}
               </v-card-title>
 
               <v-divider></v-divider>
 
-              <v-list dense>
+              <v-list v-for="(entry, pos) in item" :key="entry.Schüler">
                 <v-list-item
                     v-for="(key, index) in filteredKeys"
                     :key="index"
                 >
-                  <v-list-item-content :class="{ 'blue--text': sortBy === key }">
+                  <v-list-item-content :class="{ 'blue--text': sortBy === key }" class="font-weight-medium">
                     {{ key }}:
                   </v-list-item-content>
+                  <v-spacer></v-spacer>
                   <v-list-item-content
-                      class="align-end"
+                      class="align-end font-weight-black"
                       :class="{ 'blue--text': sortBy === key }"
                   >
-                    {{ item[key.toLowerCase()] }}
+                    {{ entry[key] }}
                   </v-list-item-content>
                 </v-list-item>
+                <v-divider v-if="pos < item.length - 1"></v-divider>
               </v-list>
             </v-card>
           </v-col>
@@ -172,7 +146,7 @@ export default {
   name: "Winners",
   data () {
     return {
-      itemsPerPageArray: [4, 8, 12],
+      itemsPerPageArray: [1, 2, 4, 8],
       search: '',
       filter: {},
       sortDesc: false,
@@ -181,7 +155,7 @@ export default {
       sortBy: 'name',
       keys: [
         'Station',
-        'Schueler',
+        'Schüler',
         'Ergebnis',
       ],
       items: [
@@ -198,6 +172,24 @@ export default {
     filteredKeys () {
       return this.keys.filter(key => key !== 'Station')
     },
+    bestScores () {
+      let bestScores = []
+      for (const entry of this.stations) {
+        let relevantResults = this.results.filter(obj => {
+          return entry.id === obj.StationId
+        })
+        if (relevantResults.length > 0) {
+          let maxScore = relevantResults.reduce((a,b)=> parseInt(a.score)>parseInt(b.score)?a:b).score
+          if (maxScore) {
+            let newEntries = this.results.filter(obj => (entry.id === obj.StationId) && (obj.score === maxScore))
+            if (newEntries.length > 0) {
+              bestScores = [...bestScores, newEntries]
+            }
+          }
+        }
+      }
+      return bestScores
+    }
   },
   created () {
     this.initialize()
@@ -205,17 +197,26 @@ export default {
   methods: {
     async initialize () {
       try {
-        let tempresults = (await ResultService.show(0)).data
-        for (const entry of tempresults) {
-          entry.Schueler = (await StudentService.find(entry.StudentId)).data.student.name
-          entry.Station = (await StationService.find(entry.StationId)).data.station.name
-          entry.Ergebnis = entry.result
-        }
+        this.results = (await ResultService.show(0)).data
         this.students = (await StudentService.show(0)).data
         this.stations = (await StationService.show(0)).data
-        this.items = tempresults
+        for (const entry of this.results) {
+          entry.Schüler = this.students.find(obj => {
+            return obj.id === entry.StudentId
+          }).name
+          entry.Station = this.stations.find(obj => {
+            return obj.id === entry.StationId
+          }).name
+          entry.Ergebnis = entry.score
+        }
+        this.items = this.bestScores;
+        console.log(this.items)
       } catch(error) {
-        console.log(error.response.data)
+        if (error.response) {
+          console.log(error.response.data)
+        } else {
+          console.log(error)
+        }
       }
     },
     nextPage () {

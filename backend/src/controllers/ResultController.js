@@ -1,6 +1,5 @@
-const {Result} = require('../models')
-const {Student} = require('../models')
-const {Station} = require('../models')
+const {Result, Student, Station, Sequelize} = require('../models')
+
 
 module.exports = {
     async newResult (req, res) {
@@ -20,11 +19,6 @@ module.exports = {
                 results = await Result.findAll({
                     limit: number,
                     attributes: ['StudentId', 'StationId', 'score'],
-                    include: [{
-                        model: Station,
-                        attributes:['id', 'name']},
-                        {model: Student,
-                        attributes:['id', 'name']},]
                 })
             } else {
                 results = await Result.findAll({
@@ -47,6 +41,20 @@ module.exports = {
             res.send(req.body)
         } catch (err) {
             res.send(500, 'Beim Ändern des Ergebnisses trat ein Fehler auf.')
+        }
+    },
+
+    async findMax (req, res) {
+        try {
+            const result = await Result.findAll({
+                attributes: ['StudentId', 'StationId', 'score'],
+            })
+            if (!result) {
+                res.send(403, 'Das zu löschende Ergebnis konnte nicht gefunden werden.')
+            }
+            res.send(result)
+        } catch (err) {
+            res.send(500, 'Beim Löschen des Ergebnisses trat ein Fehler auf.' + err)
         }
     },
 

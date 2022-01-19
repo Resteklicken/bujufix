@@ -32,6 +32,8 @@ module.exports = (app) => {
 
     app.get('/results/show/:number', ResultController.showList)
 
+    app.get('/winners/', ResultController.findMax)
+
     app.post('/results/new', ResultController.newResult)
 
     app.post('/results/edit/:studentid&:stationid', ResultController.edit)
