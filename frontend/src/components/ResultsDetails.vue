@@ -219,8 +219,6 @@ export default {
       this.editedIndex = this.results.indexOf(item)
       item.StudentId = this.results[this.editedIndex].StudentId
       item.StationId = this.results[this.editedIndex].StationId
-      delete item.name
-      delete item.station
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
@@ -236,7 +234,8 @@ export default {
             this.closeDelete()}
           ).catch((error) => {
             alert(error.response.data)
-          })
+            this.initialize()
+      })
     },
     close () {
       this.dialog = false
