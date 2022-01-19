@@ -1,6 +1,23 @@
-FROM node:14 as build-stage
+FROM node:14 as BASE
+
 WORKDIR /backend
+
 COPY package*.json ./
-RUN npm install
-COPY .. .
-RUN npm run build
+
+EXPOSE 8080
+
+FROM BASE as PRODUCTION
+
+RUN npm i
+
+COPY . .
+
+CMD ["node", "src/app.js"]
+
+FROM BASE as DEV
+
+WORKDIR /backend
+
+RUN npm i
+
+CMD [ "npm", "run", "start"]

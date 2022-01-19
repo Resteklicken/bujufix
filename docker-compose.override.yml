@@ -1,20 +1,15 @@
 services:
-  buju-backend:
+  bujufix-backend:
     build:
-      context: ..
-      dockerfile: Dockerfile_production
-    working_dir: /home/node/app
-    volumes:
-     - ./:/home/node/app
-    ports:
-      - 8080:80
+      target: PRODUCTION
+    working_dir: /backend
 
   bujufix-frontend:
     build:
-      context: ..
-      dockerfile: Dockerfile_production
-    working_dir: /home/node/app
+      target: PRODUCTION
+    working_dir: /frontend
+
+  proxy:
     volumes:
-      - ./:/home/node/app
-    ports:
-      - 8081:80
+      - ./proxy/nginx_prod.conf:/etc/nginx/nginx.conf
+      - ./proxy/nginx_prod.conf:/etc/nginx/conf.d/default.conf
