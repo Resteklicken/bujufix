@@ -4,9 +4,6 @@
         :items="items"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
         hide-default-footer
     >
       <template v-slot:header>
@@ -17,22 +14,8 @@
         >
           <v-toolbar-title>Beste Ergebnisse nach Station</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-text-field
-              v-model="search"
-              clearable
-              solo
-              color="black"
-              background-color="yellow"
-              flat
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              label="Suchen"
-              class="md-6"
-          ></v-text-field>
-          <v-spacer></v-spacer>
         </v-toolbar>
       </template>
-
       <template v-slot:default="props">
         <v-row>
           <v-col
@@ -147,12 +130,8 @@ export default {
   data () {
     return {
       itemsPerPageArray: [1, 2, 4, 8],
-      search: '',
-      filter: {},
-      sortDesc: false,
       page: 1,
       itemsPerPage: 4,
-      sortBy: 'name',
       keys: [
         'Station',
         'Schüler',
