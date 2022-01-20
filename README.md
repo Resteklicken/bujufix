@@ -47,9 +47,10 @@ Adminer befindet sich unter `localhost:8000/admin`, ist aber auch über das Fron
 ---
 # Aufbau der App 
 Die App startet in fünf Containern:
+![Aufbau der App]("Aufbau der App.png")
 
 ## Geschlossenes System  
-Von den fünf Containern 
+Von den fünf Containern hat nur der NGINX Proxy eine Netzwerkverbindung nach außen. Alle anderen Container außer der MariaDB Container befinden sich in einem internen Docker Netzwerk. 
 
 ## Persistenz der Datenbank und netzwerklose Datenbankverbindung
 
