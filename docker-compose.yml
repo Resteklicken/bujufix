@@ -11,8 +11,7 @@ services:
      - db:/database/run/mysqld
 
   bujufix-frontend:
-    build:
-      context: ./frontend
+
     depends_on:
       - bujufix-backend
     restart: unless-stopped

@@ -5,8 +5,8 @@ services:
     working_dir: /backend
 
   bujufix-frontend:
-    build:
-      target: PRODUCTION
+    image:
+      git-registry.thm.de/rgnt06/buju-app:main
     working_dir: /frontend
 
   proxy:

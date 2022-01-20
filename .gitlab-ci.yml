@@ -16,33 +16,52 @@
 
 variables:
     BUILD_DIR: dist
+    FRONTEND_DIR: ./frontend
+    BACKEND_DIR: ./backend
+    CURRENT_JOB: nothing
 
 stages:
     - build
     - deploy
 
-cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-
-
-vuebuild:
+frontendbuild_prod:
     stage: build
+    only:
+        - main
     tags:
         - npm
     image: local-nodejs:latest
     allow_failure: false
     dependencies: []
+    variables:
+        CURRENT_JOB: frontend
     script:
-        - cd ./frontend
+        - cd $FRONTEND_DIR
         - npm i
         - npm run build --prod
         - mkdir ./$BUILD_DIR/conf/
         - cp nginx.conf ./$BUILD_DIR/conf/
     artifacts:
         paths:
-            - "./frontend/$BUILD_DIR"
+            - "$FRONTEND_DIR/$BUILD_DIR"
+
+backendbuild_prod:
+    stage: build
+    only:
+        - main
+    tags:
+        - npm
+    image: local-nodejs:latest
+    allow_failure: false
+    dependencies: []
+    variables:
+        CURRENT_JOB: backend
+    script:
+        - cd $BACKEND_DIR
+        - npm i
+    artifacts:
+        paths:
+            - "$BACKEND_DIR/$BUILD_DIR"
 
 .build_image_template:
     stage: deploy
@@ -56,9 +75,9 @@ vuebuild:
         - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
         - /kaniko/executor
             --context     "$CI_PROJECT_DIR"
-            --dockerfile  "$CI_PROJECT_DIR/frontend/Dockerfile.kaniko"
-            --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-            --build-arg   "BUILD_DIR=./frontend/$BUILD_DIR"
+            --dockerfile  "$CI_PROJECT_DIR/$CURRENT_JOB/Dockerfile.kaniko"
+            --destination "$CI_REGISTRY_IMAGE-$CURRENT_JOB:$CI_COMMIT_REF_SLUG"
+            --build-arg   "BUILD_DIR=./$CURRENT_JOB/$BUILD_DIR"
 
 build_image:
     extends: .build_image_template

@@ -1,0 +1,9 @@
+FROM node:14 as BASE
+
+ARG BUILD_DIR=$BUILD_DIR
+
+COPY "${BUILD_DIR}" /backend
+
+EXPOSE 8080
+
+CMD ["node", "src/app.js"]

@@ -12,6 +12,7 @@ services:
   bujufix-frontend:
     build:
       target: DEV
+      context: ./frontend
     volumes:
       - ./frontend/:/frontend
       - /frontend/node_modules
