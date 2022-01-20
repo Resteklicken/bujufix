@@ -2,6 +2,7 @@ services:
   bujufix-backend:
     build:
       target: DEV
+      context: ./backend
     working_dir: /backend
     volumes:
       - ./backend/:/backend

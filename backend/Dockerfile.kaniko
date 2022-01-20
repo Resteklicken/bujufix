@@ -1,6 +1,6 @@
 FROM node:14 as BASE
 
-COPY . /backend
+COPY . .
 
 EXPOSE 8080
 

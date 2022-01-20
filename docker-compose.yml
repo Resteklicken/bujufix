@@ -2,8 +2,6 @@ services:
   bujufix-backend:
     depends_on:
       - bujufix-db
-    build:
-      context: ./backend
     restart: unless-stopped
     networks:
       - bujufix
@@ -11,7 +9,6 @@ services:
      - db:/database/run/mysqld
 
   bujufix-frontend:
-
     depends_on:
       - bujufix-backend
     restart: unless-stopped
