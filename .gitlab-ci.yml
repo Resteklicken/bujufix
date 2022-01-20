@@ -1,14 +1,69 @@
-push:
+#push:
+#    tags:
+#        - kaniko
+#    image:
+#        name: gcr.io/kaniko-project/executor:debug
+#        entrypoint: [""]
+#    script:
+#        - mkdir -p /kaniko/.docker
+#        - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+#        - >-
+#            /kaniko/executor
+#            --context "${CI_PROJECT_DIR}"
+#            --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile.kaniko"
+#            --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+#
+
+variables:
+    BUILD_DIR: dist
+
+stages:
+
+    - build
+    - deploy
+
+cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+
+
+ngbuild:
+    stage: build
     tags:
-        - kaniko
+        - npm
+    image: node:14
+    allow_failure: false
+    dependencies: []
+    script:
+        - mkdir /frontend
+        - cd /frontend
+        - cp package*.json ./
+        - npm i
+        - npm run build --prod
+    artifacts:
+        paths:
+            - "$BUILD_DIR"
+
+.build_image_template:
+    stage: deploy
     image:
         name: gcr.io/kaniko-project/executor:debug
         entrypoint: [""]
+    tags:
+        - kaniko
     script:
         - mkdir -p /kaniko/.docker
-        - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-        - >-
-            /kaniko/executor
-            --context "${CI_PROJECT_DIR}"
-            --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile_dev"
-            --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+        - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+        - /kaniko/executor
+            --context     "$CI_PROJECT_DIR"
+            --dockerfile  "$CI_PROJECT_DIR/frontend/docker/Dockerfile.kaniko"
+            --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+            --build-arg   "BUILD_DIR=$BUILD_DIR"
+
+build_image:
+    extends: .build_image_template
+    only:
+        - staging
+        - main
+
