@@ -36,7 +36,7 @@ vuebuild:
     allow_failure: false
     dependencies: []
     script:
-        - cp package*.json ./
+        - cp ./frontend/package*.json ./
         - npm i
         - npm run build --prod
     artifacts:
