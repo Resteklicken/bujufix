@@ -1,8 +1,6 @@
 FROM node:14 as BASE
 
-ARG BUILD_DIR=$BUILD_DIR
-
-COPY "${BUILD_DIR}" /backend
+COPY . /backend
 
 EXPOSE 8080
 

@@ -61,7 +61,7 @@ backendbuild_prod:
         - npm i
     artifacts:
         paths:
-            - "$BACKEND_DIR/$BUILD_DIR"
+            - "$BACKEND_DIR"
 
 .build_image_template:
     stage: deploy
