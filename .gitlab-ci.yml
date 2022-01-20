@@ -18,7 +18,6 @@ variables:
     BUILD_DIR: dist
 
 stages:
-
     - build
     - deploy
 
@@ -41,7 +40,7 @@ vuebuild:
         - npm run build --prod
     artifacts:
         paths:
-            - "$BUILD_DIR"
+            - "./frontend/$BUILD_DIR"
 
 .build_image_template:
     stage: deploy
