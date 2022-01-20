@@ -28,11 +28,11 @@ cache:
         - node_modules/
 
 
-ngbuild:
+vuebuild:
     stage: build
     tags:
         - npm
-    image: node:14
+    image: local-nodejs:latest
     allow_failure: false
     dependencies: []
     script:
