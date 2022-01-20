@@ -60,7 +60,7 @@ backendbuild_prod:
         - /kaniko/executor
             --context     "$CI_PROJECT_DIR"
             --dockerfile  "$CI_PROJECT_DIR/$CURRENT_JOB/Dockerfile.kaniko"
-            --destination "$CI_REGISTRY_IMAGE-$CURRENT_JOB:$CI_COMMIT_REF_SLUG"
+            --destination "$CI_REGISTRY_IMAGE:$CURRENT_JOB-$CI_COMMIT_REF_SLUG"
             --build-arg   "BUILD_DIR=./$CURRENT_JOB/$BUILD_DIR"
 
 build_frontend_image:
