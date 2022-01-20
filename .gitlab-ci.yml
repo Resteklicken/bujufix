@@ -36,7 +36,6 @@ vuebuild:
     allow_failure: false
     dependencies: []
     script:
-        - mkdir /frontend
         - cd /frontend
         - cp package*.json ./
         - npm i
