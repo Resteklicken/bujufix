@@ -15,7 +15,7 @@
 #
 
 variables:
-    BUILD_DIR: dist
+    BUILD_DIR: /frontend/dist
 
 stages:
 
