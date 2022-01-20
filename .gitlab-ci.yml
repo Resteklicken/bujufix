@@ -38,6 +38,7 @@ vuebuild:
         - cd ./frontend
         - npm i
         - npm run build --prod
+        - cp nginx.conf ./$BUILD_DIR/conf/nginx.conf
     artifacts:
         paths:
             - "./frontend/$BUILD_DIR"
