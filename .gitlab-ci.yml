@@ -56,7 +56,7 @@ vuebuild:
             --context     "$CI_PROJECT_DIR"
             --dockerfile  "$CI_PROJECT_DIR/frontend/Dockerfile.kaniko"
             --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-            --build-arg   "BUILD_DIR=$BUILD_DIR"
+            --build-arg   "BUILD_DIR=./frontend/$BUILD_DIR"
 
 build_image:
     extends: .build_image_template
