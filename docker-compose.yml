@@ -4,7 +4,7 @@ services:
       - bujufix-db
     restart: unless-stopped
     networks:
-      - bujufix
+      - bujufix-internal
     volumes:
      - db:/database/run/mysqld
 
@@ -13,7 +13,7 @@ services:
       - bujufix-backend
     restart: unless-stopped
     networks:
-      - bujufix
+      - bujufix-internal
 
   bujufix-db:
     image: mariadb
@@ -41,7 +41,7 @@ services:
     volumes:
       - db:/var/run/mysqld
     networks:
-      - bujufix
+      - bujufix-internal
 
   proxy:
     image: nginx
@@ -50,11 +50,15 @@ services:
       - bujufix-frontend
     networks:
       - bujufix
+      - bujufix-internal
     ports:
       - 8000:8000
 
 networks:
   bujufix:
+  bujufix-internal:
+    name: bujufix-internal
+    internal: true
 
 volumes:
   db:
