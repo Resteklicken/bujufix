@@ -6,6 +6,12 @@ COPY package*.json ./
 
 RUN npm i
 
+FROM BASE as DEV
+
+EXPOSE 8080
+
+CMD [ "npm", "run", "serve"]
+
 FROM BASE as BUILD
 
 COPY . .
@@ -19,10 +25,3 @@ EXPOSE 8080
 COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=BUILD --chown=www-data:www-data /frontend/dist /frontend
-
-
-FROM BASE as DEV
-
-EXPOSE 8080
-
-CMD [ "npm", "run", "serve"]
